@@ -19,79 +19,68 @@
          data-callback="onSignIn">
     </div>
     
-    <div class="g_id_signin"
-         data-type="standard"
-         data-size="large"
-         data-theme="outline"
-         data-text="sign_in_with"
-         data-shape="rectangular"
-         data-logo_alignment="left">
-    </div>
-    
-    <button id="boto-sortir" style="display:none;" onclick="signOut()">
-        Desconnectar?
-    </button>
-    
-    <h2 id="missatge-benvinguda" style="display:none; text-align: center;">Autenticació completada. Accés a la Terminal.</h2>
-
     <div class="perfil-card">
         <h1 class="glitch-text">SINTETITZADOR-X</h1>
+        
+        <h2 id="missatge-benvinguda" style="display:none;">Autenticació completada. Accés a la Terminal.</h2>
+
         <p>ID_Usuari: <span class="status">0x4a3fB9c</span></p>
         <p>Funció: **Dev Full-Stack (Neó)**</p>
-        <p>Estat: <span class="status" id="estat-connexio">Connectat [ONLINE]</span></p>
+        <p>Estat: <span class="status" id="estat-connexio" style="color: #ff0077;">Desconnectat [OFFLINE]</span></p>
 
-        <button class="btn-interact" onclick="toggleConnect()">
-            <span id="btn-text">DESCONNECTAR // TERMINAL</span>
+        <div class="g_id_signin"
+             data-type="standard"
+             data-size="large"
+             data-theme="outline"
+             data-text="sign_in_with"
+             data-shape="rectangular"
+             data-logo_alignment="left">
+        </div>
+        
+        <button id="boto-sortir" style="display:none;" onclick="signOut()">
+            DESCONNECTAR // LOGOUT
         </button>
-
+        
         <p class="footer-text">_Sistema operatiu: **CAT_OS 2077**</p>
     </div>
 
     <script>
-        // === FUNCIONS DE GOOGLE SIGN-IN ===
+        
+        const estatElement = document.getElementById('estat-connexio');
+        const card = document.querySelector('.perfil-card');
+
+        // === FUNCIONS DE GOOGLE SIGN-IN (CONTROL D'ESTAT) ===
         
         function onSignIn(response) {
             var id_token = response.credential;
             console.log("ID Token: " + id_token);
 
-            document.getElementById('boto-sortir').style.display = 'block';
-            document.getElementById('missatge-benvinguda').style.display = 'block';
+            // Actualització d'estat a CONNECTAT i color
+            estatElement.textContent = 'Connectat [ONLINE]';
+            estatElement.style.color = '#00ffff'; 
             
+            // MOSTRA: Missatge de Benvinguda i botó de Desconnexió
+            document.getElementById('missatge-benvinguda').style.display = 'block';
+            document.getElementById('boto-sortir').style.display = 'block'; 
+            
+            // AMAGA: Botó de Google Sign-In
             document.querySelector('.g_id_signin').style.display = 'none';
         }
 
         function signOut() {
-            document.getElementById('boto-sortir').style.display = 'none';
+            // Actualització d'estat a DESCONNECTAT i color
+            estatElement.textContent = 'Desconnectat [OFFLINE]';
+            estatElement.style.color = '#ff0077';
+            
+            // AMAGA: Missatge de Benvinguda i botó de Desconnexió
             document.getElementById('missatge-benvinguda').style.display = 'none';
+            document.getElementById('boto-sortir').style.display = 'none'; 
 
+            // MOSTRA: Botó de Google Sign-In
             document.querySelector('.g_id_signin').style.display = 'block';
         }
         
-        // === LÒGICA D'INTERACCIÓ CYBERPUNK ===
-        
-        const estatElement = document.getElementById('estat-connexio');
-        const btnTextElement = document.getElementById('btn-text');
-        const card = document.querySelector('.perfil-card');
-        let connectat = true;
-
-        function toggleConnect() {
-            connectat = !connectat;
-
-            if (connectat) {
-                estatElement.textContent = 'Connectat [ONLINE]';
-                estatElement.style.color = '#00ffff'; 
-                btnTextElement.textContent = 'DESCONNECTAR // TERMINAL';
-            } else {
-                estatElement.textContent = 'Desconnectat [OFFLINE]';
-                estatElement.style.color = '#ff0077'; 
-                btnTextElement.textContent = 'RECONNECTAR // INICIAR';
-                
-                document.body.classList.add('glitch-alert');
-                setTimeout(() => {
-                    document.body.classList.remove('glitch-alert');
-                }, 100);
-            }
-        }
+        // === LÒGICA D'INTERACCIÓ CYBERPUNK (Només Paral·laxi) ===
         
         document.addEventListener('mousemove', (e) => {
             const x = (window.innerWidth / 2 - e.clientX) / 40;
