@@ -1,4 +1,3 @@
-/* === FONS I TEXT BÀSIC === */
 body {
     background-color: #0d0126; /* Fons molt fosc, gairebé negre/blau */
     color: #00ffaa; /* Color verd neó principal */
@@ -13,7 +12,6 @@ body {
     transition: border 0.1s ease; /* Transició per l'alerta glitch */
 }
 
-/* === ANIMACIÓ DEL FONS - RAJOLAS DE GLITCH (too flama!) === */
 @keyframes scanline {
     0% { background-position: 0 50%; }
     100% { background-position: 100% 50%; }
@@ -40,7 +38,7 @@ body::before {
     pointer-events: none;
 }
 
-/* === ESTIL DE LA TARGETA PRINCIPAL === */
+
 .perfil-card {
     background: rgba(13, 1, 38, 0.9); 
     border: 2px solid #00ffaa; 
@@ -57,12 +55,12 @@ body::before {
     transform-style: preserve-3d; 
 }
 
-/* === EFECTES HOVER === */
+
 .perfil-card:hover {
     box-shadow: 0 0 30px #00ffaa, inset 0 0 15px #00ffaa; 
 }
 
-/* === ESTIL DELS ELEMENTS DE TEXT === */
+
 h1 {
     color: #ff0077; /* Neó rosa */
     font-size: 2.5em;
@@ -105,7 +103,7 @@ h1 {
     box-shadow: 0 0 20px #ff0077;
 }
 
-/* === KEYFRAMES PER A L'EFECTE GLITCH (ANIMACIÓ CSS) === */
+
 @keyframes glitch {
     0% { transform: translate(0); }
     20% { transform: translate(-2px, 2px); }
@@ -120,7 +118,7 @@ h1 {
     display: inline-block;
 }
 
-/* Alerta visual activada per JS quan es "desconnecta" */
+
 .glitch-alert {
     border: 5px solid red; 
     box-shadow: 0 0 15px red;
