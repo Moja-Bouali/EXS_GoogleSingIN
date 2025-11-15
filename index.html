@@ -4,9 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil CiberMoja</title>
+    
     <link rel="stylesheet" href="style.css"> 
+    
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    
+    <meta name="google-signin-client_id" content="EL_TEU_ID.apps.googleusercontent.com">
+
 </head>
 <body>
+    
+    <div id="g_id_onload"
+         data-client_id="EL_TEU_ID.apps.googleusercontent.com"
+         data-callback="onSignIn">
+    </div>
+    
+    <div class="g_id_signin"
+         data-type="standard"
+         data-size="large"
+         data-theme="outline"
+         data-text="sign_in_with"
+         data-shape="rectangular"
+         data-logo_alignment="left">
+    </div>
+    
+    <button id="boto-sortir" style="display:none;" onclick="signOut()">
+        Desconnectar?
+    </button>
+    
+    <h2 id="missatge-benvinguda" style="display:none; text-align: center;">Autenticació completada. Accés a la Terminal.</h2>
 
     <div class="perfil-card">
         <h1 class="glitch-text">SINTETITZADOR-X</h1>
@@ -22,7 +48,26 @@
     </div>
 
     <script>
-        // === JAVASCRIPT PER L'INTERACCIÓ FLAMA ===
+        // === FUNCIONS DE GOOGLE SIGN-IN ===
+        
+        function onSignIn(response) {
+            var id_token = response.credential;
+            console.log("ID Token: " + id_token);
+
+            document.getElementById('boto-sortir').style.display = 'block';
+            document.getElementById('missatge-benvinguda').style.display = 'block';
+            
+            document.querySelector('.g_id_signin').style.display = 'none';
+        }
+
+        function signOut() {
+            document.getElementById('boto-sortir').style.display = 'none';
+            document.getElementById('missatge-benvinguda').style.display = 'none';
+
+            document.querySelector('.g_id_signin').style.display = 'block';
+        }
+        
+        // === LÒGICA D'INTERACCIÓ CYBERPUNK ===
         
         const estatElement = document.getElementById('estat-connexio');
         const btnTextElement = document.getElementById('btn-text');
@@ -33,17 +78,14 @@
             connectat = !connectat;
 
             if (connectat) {
-                // Estat CONNECTAT
                 estatElement.textContent = 'Connectat [ONLINE]';
                 estatElement.style.color = '#00ffff'; 
                 btnTextElement.textContent = 'DESCONNECTAR // TERMINAL';
             } else {
-                // Estat DESCONNECTAT
                 estatElement.textContent = 'Desconnectat [OFFLINE]';
                 estatElement.style.color = '#ff0077'; 
                 btnTextElement.textContent = 'RECONNECTAR // INICIAR';
                 
-                // Efecte d'alerta visual amb un petit "glitch"
                 document.body.classList.add('glitch-alert');
                 setTimeout(() => {
                     document.body.classList.remove('glitch-alert');
@@ -51,17 +93,14 @@
             }
         }
         
-        // Efecte extra: Moviment subtil de la targeta amb el moviment del ratolí (Paral·laxi)
         document.addEventListener('mousemove', (e) => {
             const x = (window.innerWidth / 2 - e.clientX) / 40;
             const y = (window.innerHeight / 2 - e.clientY) / 40;
             
-            // Apliquem un petit gir 3D 
             card.style.transform = `rotateX(${y}deg) rotateY(${x}deg) scale(1.05)`;
         });
 
         document.addEventListener('mouseleave', () => {
-            // Restablim la transformació
             card.style.transform = 'rotateX(0) rotateY(0) scale(1)';
         });
     </script>
