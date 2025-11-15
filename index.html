@@ -1,1 +1,69 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil CiberMoja</title>
+    <link rel="stylesheet" href="styles.css"> 
+</head>
+<body>
 
+    <div class="perfil-card">
+        <h1 class="glitch-text">SINTETITZADOR-X</h1>
+        <p>ID_Usuari: <span class="status">0x4a3fB9c</span></p>
+        <p>Funció: **Dev Full-Stack (Neó)**</p>
+        <p>Estat: <span class="status" id="estat-connexio">Connectat [ONLINE]</span></p>
+
+        <button class="btn-interact" onclick="toggleConnect()">
+            <span id="btn-text">DESCONNECTAR // TERMINAL</span>
+        </button>
+
+        <p class="footer-text">_Sistema operatiu: **CAT_OS 2077**</p>
+    </div>
+
+    <script>
+        // === JAVASCRIPT PER L'INTERACCIÓ FLAMA ===
+        
+        const estatElement = document.getElementById('estat-connexio');
+        const btnTextElement = document.getElementById('btn-text');
+        const card = document.querySelector('.perfil-card');
+        let connectat = true;
+
+        function toggleConnect() {
+            connectat = !connectat;
+
+            if (connectat) {
+                // Estat CONNECTAT
+                estatElement.textContent = 'Connectat [ONLINE]';
+                estatElement.style.color = '#00ffff'; 
+                btnTextElement.textContent = 'DESCONNECTAR // TERMINAL';
+            } else {
+                // Estat DESCONNECTAT
+                estatElement.textContent = 'Desconnectat [OFFLINE]';
+                estatElement.style.color = '#ff0077'; 
+                btnTextElement.textContent = 'RECONNECTAR // INICIAR';
+                
+                // Efecte d'alerta visual amb un petit "glitch"
+                document.body.classList.add('glitch-alert');
+                setTimeout(() => {
+                    document.body.classList.remove('glitch-alert');
+                }, 100);
+            }
+        }
+        
+        // Efecte extra: Moviment subtil de la targeta amb el moviment del ratolí (Paral·laxi)
+        document.addEventListener('mousemove', (e) => {
+            const x = (window.innerWidth / 2 - e.clientX) / 40;
+            const y = (window.innerHeight / 2 - e.clientY) / 40;
+            
+            // Apliquem un petit gir 3D 
+            card.style.transform = `rotateX(${y}deg) rotateY(${x}deg) scale(1.05)`;
+        });
+
+        document.addEventListener('mouseleave', () => {
+            // Restablim la transformació
+            card.style.transform = 'rotateX(0) rotateY(0) scale(1)';
+        });
+    </script>
+</body>
+</html>
